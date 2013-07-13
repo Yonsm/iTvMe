@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<atv>
+	<body>
+		<optionDialog id="intro">
+			<header>
+				<simpleHeader>
+					<title>Apple TV 媒体浏览器</title>
+				</simpleHeader>
+			</header>
+			<description>
+<![CDATA[版本 3.0.3 构建 2013.04.05
+
+
+1. 按播放键从选定的文件开始连续播放；按选择键，则仅播放当前文件，不会自动播放下一个内容。
+
+2. 支持外挂字幕了，假如有一个文件叫 Video.mp4，如果存在一个文件 Video.srt 或 Video.mp4.srt，会自动用做字幕。
+
+3. 搭配 MBL 播放 MKV ，具体方法：http://www.ottnt.com/forum.php?mod=viewthread&tid=180
+
+4. 支持自动生成缩略图，需要 ffmpeg 1.0 或以上最新版本，且 HTTP 服务器打开任意目录 CGI 支持。MBL 上安装 ffmpeg 的方法：http://bbs.weiphone.com/read-htm-tid-5529823.html
+
+版权所无 (L) 2012-2013 Yonsm.NET，不保留任何权利。
+网站 WWW.Yonsm.NET，微博 http://weibo.com/yonsm。
+部分代码和主要方法来自 TTVast http://www.ottnt.com，谨谢。
+访问 http://bbs.weiphone.com/read-htm-tid-5460032.html 反馈建议。]]></description>
+			<menu>
+				<sections>
+					<menuSection>
+						<items>
+							<oneLineMenuItem id="update" onSelect="atv.loadURL('http://hdweb.googlecode.com/svn/ATV/ce/update.xml')">
+                				<label>检查更新</label>
+              				</oneLineMenuItem>
+							<oneLineMenuItem id="thumbn" onSelect="atv.loadURL('http://mlb.mlb.com/ce/thumb.cgi')">
+                				<label>批量缩略图</label>
+              				</oneLineMenuItem>
+						</items>
+					</menuSection>
+				</sections>
+			</menu>
+		</optionDialog>
+	</body>
+</atv>

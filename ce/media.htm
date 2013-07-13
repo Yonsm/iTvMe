@@ -1,0 +1,148 @@
+<html>
+<head>
+	<meta http-equiv=content-type content="text/html; charset=UTF-8" />
+	<title>Apple TV XML Tester</title>
+	<script type="text/javascript">
+		
+		var atv = window;
+
+		function parseXML(args)
+		{
+			return args;
+		}
+
+		function loadXML(args)
+		{
+			xml = formatXML(args);
+			var text = xml.replace( /</g           , '&lt;'  ).     
+							replace( />/g           , '&gt;' )/*.
+							replace( /&(?!#?\w+;)/g , '&amp;').      
+							replace( /"([^"]*)"/g   , '“$1”'   ).     
+							replace( /…/g           , '&hellip;' ).    
+							replace( /“/g           , '&ldquo;'  ).     
+							replace( /”/g           , '&rdquo;'  ).     
+							replace( /‘/g           , '&lsquo;'  ).     
+							replace( /’/g           , '&rsquo;'  ).    
+							replace( /—/g           , '&mdash;' ).     
+							replace( /–/g           , '&ndash;'  )*/;
+
+			var action = /(onPlay|onSelect|onHoldSelect)(=\")((\w|=|\?|\.|\/|&|-|%|\'|\(|\)|:)+)(\")/g;
+        	text = text.replace(action, '<a href="javascript:$3">$1</a>$2$3$5');
+        	document.body.innerHTML = '<pre>' + text + '</pre><textarea id="source"></textarea>';
+			document.getElementById('source').value = args;
+		}
+
+		function loadAndSwapXML(args)
+		{
+			loadXML(args);
+		}
+
+		function loadPlist(args)
+		{
+			alert(JSON.stringify(args))
+		}
+
+		function loadAndSwapPlist(args)
+		{
+			alert(JSON.stringify(args))
+		}
+
+		Document.prototype.rootElement = document;
+
+		Document.prototype.getElementByTagName = function(name)
+		{
+			var elements = this.getElementsByTagName(name);
+			return (name == 'script') ? elements[1] : elements[0];	// !
+		};
+
+		String.prototype.removeLineEnd = function()
+		{
+			return this.replace(/(<.+?\s+?)(?:\n\s*?(.+?=".*?"))/g, '$1 $2');
+		};
+
+		function formatXML(text)
+		{
+			//去掉多余的空格
+			text = '\n' + text.replace(/(<\w+)(\s.*?>)/g, function($0, name, props)
+			{
+				return name + ' ' + props.replace(/\s+(\w+=)/g, " $1");
+			}).replace(/>\s*?</g, ">\n<");
+
+			//把注释编码
+			text = text.replace(/\n/g, '\r').replace(/<!--(.+?)-->/g, function($0, text)
+			{
+				var ret = '<!--' + escape(text) + '-->';
+				//alert(ret);
+				return ret;
+			}).replace(/\r/g, '\n');
+
+			//调整格式
+			var rgx = /\n(<(([^\?]).+?)(?:\s|\s*?>|\s*?(\/)>)(?:.*?(?:(?:(\/)>)|(?:<(\/)\2>)))?)/mg;
+			var nodeStack = [];
+			var output = text.replace(rgx, function($0, all, name, isBegin, isCloseFull1, isCloseFull2, isFull1, isFull2)
+			{
+				var isClosed = (isCloseFull1 == '/') || (isCloseFull2 == '/') || (isFull1 == '/') || (isFull2 == '/');
+				//alert([all,isClosed].join('='));
+				var prefix = '';
+				if(isBegin == '!')
+				{
+					prefix = getPrefix(nodeStack.length);
+				}
+				else
+				{
+					if(isBegin != '/')
+					{
+						prefix = getPrefix(nodeStack.length);
+						if(!isClosed)
+						{
+							nodeStack.push(name);
+						}
+					}
+					else
+					{
+						nodeStack.pop();
+						prefix = getPrefix(nodeStack.length);
+					}
+
+
+				}
+				var ret = '\n' + prefix + all;
+				return ret;
+			});
+
+			var prefixSpace = -1;
+			var outputText = output.substring(1);
+			//alert(outputText);
+			//把注释还原并解码，调格式
+			outputText = outputText.replace(/\n/g, '\r').replace(/(\s*)<!--(.+?)-->/g, function($0, prefix, text)
+			{
+				//alert(['[',prefix,']=',prefix.length].join(''));
+				if(prefix.charAt(0) == '\r') prefix = prefix.substring(1);
+				text = unescape(text).replace(/\r/g, '\n');
+				var ret = '\n' + prefix + '<!--' + text.replace(/^\s*/mg, prefix) + '-->';
+				//alert(ret);
+				return ret;
+			});
+
+			return outputText.replace(/\s+$/g, '').replace(/\r/g, '\r\n');
+
+		}
+
+		function getPrefix(prefixIndex)
+		{
+			var span = '  ';
+			var output = [];
+			for(var i = 0; i < prefixIndex; ++i)
+			{
+				output.push(span);
+			}
+
+			return output.join('');
+		}
+	</script>
+	<script src="./media.js"></script>/
+</head>
+
+<body onLoad = "loadPage((location.search.length > 8) ? location.search.substring(1) : 'http://mlb.mlb.com/media/')">
+</body>
+</html>

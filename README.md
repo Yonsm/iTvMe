@@ -5,15 +5,18 @@ Apple TV Media Explorer
 1. 确保您的AppleTV固件版本是5.1 或 5.1.1（必须，支持幻灯片方式查看图片和TAB方式的呈现）。
 
 2. 在设置中把区域改成香港（或者美国也行，但香港图标少点，看起来舒爽点），这样主页上你可以看到好些图标。
-☞ MLB.TV：劫持到我们自己的本地媒体浏览器上，这是本次帖子的重点。
-☞ WSJ Live：劫持到坚果在线。
-☞ 预告片：劫持到TT的服务器。
+* MLB.TV：劫持到我们自己的本地媒体浏览器上，这是本次帖子的重点。
+* WSJ Live：劫持到坚果在线。
+* 预告片：劫持到TT的服务器。
 
 3. 劫持DNS，有两种方法，请任选其一：
 1).如果您的路由器支持DNSMasQ，可以在路由器上配置DNS劫持（192.168.1.9换成你的http服务器的ip地址）：
-☞ address=/trailers.apple.com/180.153.225.136
-☞ address=/www.marketwatch.com/192.168.1.9
-☞ address=/lws.mlb.com/192.168.1.9
+
+* address=/trailers.apple.com/180.153.225.136
+
+* address=/www.marketwatch.com/192.168.1.9
+
+* address=/lecurea.mlb.com/192.168.1.9
 
 2).如果你不会弄DNS服务器，可以用我提供的，在AppleTV上设置DNS为117.41.182.103，这样的话http服务器地址必须是 192.168.1.9。
 

@@ -27,7 +27,7 @@
 				<sections>
 					<menuSection>
 						<items>
-							<oneLineMenuItem id="update" onSelect="atv.loadURL('http://github.com/Yonsm/ATVME/api-video/update.xml')">
+							<oneLineMenuItem id="update" onSelect="atv.loadURL('https://raw.github.com/Yonsm/ATVME/master/api-video/update.xml')">
                 				<label>检查更新</label>
               				</oneLineMenuItem>
 							<oneLineMenuItem id="thumbn" onSelect="atv.loadURL('http://www.marketwatch.com/api-video/thumb.cgi')">

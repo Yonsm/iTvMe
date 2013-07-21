@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <atv>
 	<head>
-		<script src="http://mlb.mlb.com/ce/media.js"/>
+		<script src="http://www.marketwatch.com/api-video/media.js"/>
 	</head>
 	<body>
 		<viewWithNavigationBar id="navigation" onNavigate="loadItem(event)">

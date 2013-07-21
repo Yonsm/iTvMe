@@ -27,10 +27,10 @@
 				<sections>
 					<menuSection>
 						<items>
-							<oneLineMenuItem id="update" onSelect="atv.loadURL('http://hdweb.googlecode.com/svn/ATV/ce/update.xml')">
+							<oneLineMenuItem id="update" onSelect="atv.loadURL('http://github.com/Yonsm/ATVME/api-video/update.xml')">
                 				<label>检查更新</label>
               				</oneLineMenuItem>
-							<oneLineMenuItem id="thumbn" onSelect="atv.loadURL('http://mlb.mlb.com/ce/thumb.cgi')">
+							<oneLineMenuItem id="thumbn" onSelect="atv.loadURL('http://www.marketwatch.com/api-video/thumb.cgi')">
                 				<label>批量缩略图</label>
               				</oneLineMenuItem>
 						</items>

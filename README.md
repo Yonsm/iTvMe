@@ -16,7 +16,7 @@ Apple TV Media Explorer
 
 * address=/www.marketwatch.com/192.168.1.9
 
-* address=/lecurea.mlb.com/192.168.1.9
+* address=/securea.mlb.com/192.168.1.9
 
 2).如果你不会弄DNS服务器，可以用我提供的，在AppleTV上设置DNS为117.41.182.103，这样的话http服务器地址必须是 192.168.1.9。
 

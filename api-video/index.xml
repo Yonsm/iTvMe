@@ -8,27 +8,27 @@
 			<navigation>
 				<navigationItem id="movie">
 					<title>影片</title>
-					<url>http://mlb.mlb.com/media/Movies/</url>
+					<url>http://www.marketwatch.com/media/Movies/</url>
 				</navigationItem>
 				<navigationItem id="photo">
 					<title>照片</title>
-					<url>http://mlb.mlb.com/media/Pictures/?C=N;O=D</url>
+					<url>http://www.marketwatch.com/media/Pictures/?C=N;O=D</url>
 				</navigationItem>
 				<navigationItem id="video">
 					<title>视频</title>
-					<url>http://mlb.mlb.com/media/Videos/?C=N;O=D</url>
+					<url>http://www.marketwatch.com/media/Videos/?C=N;O=D</url>
 				</navigationItem>
 				<navigationItem id="music">
 					<title>音乐</title>
-					<url>http://mlb.mlb.com/media/Music/</url>
+					<url>http://www.marketwatch.com/media/Music/</url>
 				</navigationItem>
 				<navigationItem id="download">
 					<title>下载</title>
-					<url>http://mlb.mlb.com/media/Downloads/</url>
+					<url>http://www.marketwatch.com/media/Downloads/</url>
 				</navigationItem>
 				<navigationItem id="intro">
 					<title>说明</title>
-					<url>http://mlb.mlb.com/ce/intro.xml</url>
+					<url>http://www.marketwatch.com/api-video/intro.xml</url>
 				</navigationItem>
 			</navigation>
 		</viewWithNavigationBar>

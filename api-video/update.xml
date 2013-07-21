@@ -8,14 +8,12 @@
 				</simpleHeader>
 			</header>
 			<description>
-<![CDATA[最新版本 3.0.2 构建 2013.04.05
-源码地址：http://hdweb.googlecode.com/svn/ATV/ce
+<![CDATA[最新版本 3.0.4 构建 2013.07.21
+源码地址：https://github.com/Yonsm/ATVME
 
 1. 搭配 MBL 播放 MKV ，具体方法：http://www.ottnt.com/forum.php?mod=viewthread&tid=180
 
 2. 支持自动生成缩略图，需要 ffmpeg 1.0 或以上最新版本，且 HTTP 服务器打开任意目录 CGI 支持。MBL 上安装 ffmpeg 的方法：http://bbs.weiphone.com/read-htm-tid-5529823.html
-
-新年快乐！
 
 ]]>
 </description>

@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <atv>
 	<head>
-		<script src="http://trailers.apple.com/appletv/media.js"/>
+		<script src="http://192.168.1.9/appletv/media.js"/>
 	</head>
 	<body>
 		<viewWithNavigationBar id="navigation" onNavigate="loadItem(event)">
 			<navigation>
 				<navigationItem id="movie">
 					<title>影片</title>
-					<url>http://trailers.apple.com/media/Movies/</url>
+					<url>http://192.168.1.9/media/Movies/</url>
 				</navigationItem>
 				<navigationItem id="photo">
 					<title>照片</title>
-					<url>http://trailers.apple.com/media/Pictures/?C=N;O=D</url>
+					<url>http://192.168.1.9/media/Pictures/?C=N;O=D</url>
 				</navigationItem>
 				<navigationItem id="video">
 					<title>视频</title>
-					<url>http://trailers.apple.com/media/Videos/?C=N;O=D</url>
+					<url>http://192.168.1.9/media/Videos/?C=N;O=D</url>
 				</navigationItem>
 				<navigationItem id="music">
 					<title>音乐</title>
-					<url>http://trailers.apple.com/media/Music/</url>
+					<url>http://192.168.1.9/media/Music/</url>
 				</navigationItem>
 				<navigationItem id="download">
 					<title>下载</title>
-					<url>http://trailers.apple.com/media/Downloads/</url>
+					<url>http://192.168.1.9/media/Downloads/</url>
 				</navigationItem>
 				<navigationItem id="intro">
 					<title>在线</title>

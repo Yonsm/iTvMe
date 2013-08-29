@@ -1,3 +1,43 @@
+<script>
+
+var images = [];
+
+function mprev(href) {
+	for(var i = 0; i < images.length; i++) {
+		if(images[i] == href) {
+			if(i > 0) {
+				mopen(images[i - 1]);
+				return;
+			}
+		}
+	}
+	alert('已经是第一张了');
+}
+
+function mnext(href) {
+	for(var i = 0; i < images.length; i++) {
+		if(images[i] == href) {
+			if(i < images.length - 1) {
+				mopen(images[i + 1]);
+				return;
+			}
+		}
+	}
+	alert('已经是最后一张了');
+}
+
+function mopen(href) {
+	var doc = document.open("text/html");
+	var html = '<html><body>';
+	html += '<a href="' + location.href + '">返回</a>';
+	html += '|<a href="javascript:mprev(\'' + href + '\')">上一张</a>';
+	html += '|<a href="javascript:mnext(\'' + href + '\')">下一张</a>';
+	html += '<br><br><img src="' + href + '"></img>';
+	html += '</body></html>';
+	doc.write(html);
+	doc.close();
+}
+
 function medex() {
 	var dirs = [];
 	var files = [];
@@ -85,6 +125,10 @@ function medex() {
 			items += '<tr>';
 		}
 		var thumb = (name == '上一级') ? ('/appletv/image/up.png') : fetchThumb(href, type);
+		if(type == 'jpg' || type == 'png' || type == 'bmp' || type == 'gif') {
+			images.push(decodeURIComponent(href));
+			href = 'javascript:mopen(\'' + href + '\')';
+		}
 		items += '<td width="160" height="180" align="center"><a id="' + type + items_count + '" href="' + href + '">';
 		items += '<image width="134" src=' + thumb + '></image>';
 		items += '<br>' + name;
@@ -131,4 +175,11 @@ function medex() {
 	return '<table align="center">' + items + '</table>';
 }
 
-document.body.innerHTML = medex();
+var html = '<html><head>';
+html += '<title>媒体浏览器</title>'
+html += '<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">';
+html += '</head><body>';
+html += medex();
+html += '</body></html>';
+document.documentElement.innerHTML = html;
+</script>

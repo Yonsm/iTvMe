@@ -1,0 +1,92 @@
+<html>
+<head>
+<link type="text/css" rel="stylesheet" href="chrome-extension://cpngackimfmofbokmjmljamhdncknpmg/style.css">
+<script type="text/javascript" charset="utf-8" src="chrome-extension://cpngackimfmofbokmjmljamhdncknpmg/page_context.js"></script>
+<style>
+.image
+{
+	max-width:100%;
+	max-height:100%;
+}
+#back {
+	position: fixed;
+	width: 60%;
+	height: 20%;
+	top: 0%;
+	left: 20%;
+	cursor: n-resize;
+}
+#back:hover {
+	filter:alpha(opacity=30);
+	opacity:0.2;
+	background-color:gray;
+}
+#play {
+	position: fixed;
+	width: 60%;
+	height: 20%;
+	top: 80%;  
+	left: 20%;
+	cursor: s-resize;
+}
+#play:hover {
+	filter:alpha(opacity=30);
+	opacity:0.2;
+	background-color:gray;
+}
+#zoom {
+	position: fixed;
+	width: 60%;
+	height: 60%;
+	top: 20%;
+	left: 20%;
+	cursor: move;
+}   
+#prev {
+	position: fixed;
+	width: 20%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	cursor: w-resize;
+}
+#prev:hover {
+	filter:alpha(opacity=30);
+	opacity:0.3;
+	background-color:gray;
+}
+#next {
+	position: fixed;
+	width: 20%;
+	height: 100%;
+	top: 0;
+	left: 80%;
+	cursor: e-resize;
+}
+#next:hover {
+	filter:alpha(opacity=30);
+	opacity:0.3;
+	background-color:gray;
+}
+</style>
+<script>
+function zoom()
+{
+	var image = document.getElementById('image');
+	image.className = image.className ? '' : 'image';
+}
+function play()
+{
+}
+</script>
+</head>
+<body style="margin:0">
+ <center>
+	<img id="image" class="image" src="https://yonsm.3322.org/media/Pictures/2002.07 大学/2003-01-01_13-42-06.jpg">
+	<a href="https://yonsm.3322.org/media/Pictures/2002.07%20%e5%a4%a7%e5%ad%a6/" title="返回"><div id="back"></div></a>
+	<a href="javascript:play();" title="播放"><div id="play"></div></a>
+	<a href="javascript:zoom();" title="缩放"><div id="zoom"></div></a>
+	<a href="javascript:mprev('https://yonsm.3322.org/media/Pictures/2002.07 大学/2003-01-01_13-42-06.jpg')" title="上一张"><div id="prev"></div></a>
+	<a href="javascript:mnext('https://yonsm.3322.org/media/Pictures/2002.07 大学/2003-01-01_13-42-06.jpg')" title="下一张"><div id="next"></div></a>
+ </center>
+</body></html> 

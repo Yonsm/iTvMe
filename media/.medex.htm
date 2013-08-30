@@ -1,3 +1,4 @@
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <script>
 
 var images = [];
@@ -174,12 +175,6 @@ function medex() {
 	// Geenrate HTML
 	return '<table align="center">' + items + '</table>';
 }
-
-var html = '<html><head>';
-html += '<title>媒体浏览器</title>'
-html += '<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">';
-html += '</head><body>';
-html += medex();
-html += '</body></html>';
-document.documentElement.innerHTML = html;
+document.title = document.title.replace('Index of', '媒体浏览');
+document.body.innerHTML = medex();
 </script>

@@ -1,10 +1,110 @@
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3">
 <script>
+// Show toast message
 
-// Check value exists in array
+function toast(message, timeout) {
+	var toast = document.getElementById("toast");
+	if(toast == null) {
+		var html = '<div id="toast" style="position:fixed;top:50%;left:50%;width:200px;margin-left:-100px;border:1px solid #666;background-color:#B1BCCF;padding:10px 0;text-align:center;opacity:0.9;-webkit-transition:opacity 0.5s ease-out;-moz-transition:opacity 0.5s ease-out;-ms-transition:opacity 0.5s ease-out;-o-transition:opacity 0.5s ease-out;transition:opacity 0.5s ease-out;">' + message + '</div>';
+		document.body.insertAdjacentHTML('beforeEnd', html);
+	} else {
+		toast.innerHTML = message;
+		toast.style.opacity = 0.9;
+	}
+	setTimeout('document.getElementById("toast").style.opacity = 0', timeout ? timeout : 1500);
+}
+
+// Image browser data
+var iindex;
+var images;
+
+// Load image
+
+function iload(index) {
+	iindex = index;
+	document.title = '图片浏览 ' + (index + 1) + '/' + images.length;
+	document.getElementById('image').src = images[index][1];
+}
+
+// Zoom image
+
+function izoom() {
+	var style = document.getElementById('image').style;
+	style.cssText = style.cssText ? '' : 'max-width:100%;max-height:100%;';
+}
+
+// Previous image
+
+function iprev() {
+	if(iindex > 0) {
+		iload(iindex - 1);
+		return true;
+	} else {
+		toast('已经是第一张了');
+		return false;
+	}
+}
+
+// Next image
+
+function inext() {
+	if(iindex < images.length - 1) {
+		iload(iindex + 1);
+		return true;
+	} else {
+		toast('已经是最后一张了');
+		return false;
+	}
+}
+
+// Play timer
+var timer;
+
+// Play slide show
+
+function iplay() {
+	if(timer) {
+		clearInterval(timer);
+		timer = 0;
+		toast('停止播放幻灯片');
+	} else {
+		toast('开始播放幻灯片', 2500);
+		timer = setInterval('if (!inext()) iplay();', 3000);
+	}
+}
+
+// Image browser
+
+function imgex(index) {
+	iindex = index;
+	var html = '\
+	<html>\
+	<head>\
+	<title>图片浏览 ' + (index + 1) + '/' + images.length + '</title>\
+	</head>\
+	<body style="margin:0">\
+	<center>\
+	<img id="image" style="max-width:100%;max-height:100%;" src="' + images[index][1] + '">\
+	<div ontouchstart="style.opacity=0.2" onmousedown="style.opacity=0.2" onmouseup="style.opacity=0" onclick="history.back()" title="返回" style="position:fixed;left:20%;top:00%;width:60%;height:20%;cursor:n-resize;background-color:gray;opacity:0;"></div>\
+	<div ontouchstart="style.opacity=0.2" onmousedown="style.opacity=0.2" onmouseup="style.opacity=0" onclick="iplay()" title="播放" style="position:fixed;left:20%;top:80%;width:60%;height:20%;cursor:s-resize;background-color:gray;opacity:0;"></div>\
+	<div ontouchstart="style.opacity=0.1" onmousedown="style.opacity=0.1" onmouseup="style.opacity=0" onclick="izoom()" title="缩放" style="position:fixed;left:20%;top:20%;width:60%;height:60%;cursor:move;background-color:gray;opacity:0;"></div>\
+	<div ontouchstart="style.opacity=0.3" onmousedown="style.opacity=0.3" onmouseup="style.opacity=0" onclick="iprev()" title="上一张"style="position:fixed;left:0%;top:0%;width:20%;height:100%;cursor:w-resize;background-color:gray;opacity:0;"></div>\
+	<div ontouchstart="style.opacity=0.3" onmousedown="style.opacity=0.3" onmouseup="style.opacity=0" onclick="inext()" title="下一张" style="position:fixed;left:80%;top:0%;width:20%;height:100%;cursor:e-resize;background-color:gray;opacity:0;"></div>\
+	</center>\
+	</body>\
+	</html>';
+
+	var doc = document.open('text/html', 'replace');
+	doc.write(html);
+	doc.close();
+}
+
+// Media types
 var types = ['jpg', 'png', 'gif', 'bmp', 'mov', 'mp4', 'm4v', 'mkv', 'mpg', 'avi', 'm3u', 'mp3', 'aac'];
 
-function mediaType(type) {
+// Get media type index
+
+function mtype(type) {
 	for(var i in types) {
 		if(types[i] == type) {
 			return i;
@@ -13,10 +113,12 @@ function mediaType(type) {
 	return -1;
 }
 
-// Fetch thumbnail
+// At least one media file without thumbnail
 var nothumb = false;
 
-function fetchThumb(thumbs, href, type) {
+// Fetch thumbnail
+
+function mthumb(thumbs, href, type) {
 	var pos = href.lastIndexOf('/');
 	var key = (pos != -1) ? href.substring(pos + 1) : href;
 	for(var i in thumbs) {
@@ -25,30 +127,31 @@ function fetchThumb(thumbs, href, type) {
 		}
 	}
 
-	if(type != 'dir' && mediaType(type) != -1) nothumb = true;
+	if(type != 'dir' && mtype(type) != -1) nothumb = true;
 	return type ? ('/appletv/image/' + type + '.png') : href;
 }
 
-// Add items
 var items_count = 0;
 var items_per_row = document.documentElement.clientWidth / 160 | 0;
 if(items_per_row < 1) items_per_row = 1;
 
-function addItem(name, href, thumb) {
-	var body = '';
+// Make item
+
+function mitem(name, href, thumb) {
+	var item = '';
 	if(items_count % items_per_row == 0) {
-		body += '<tr>';
+		item += '<tr>';
 	}
 
-	body += '<td width="160" height="180" align="center"><a href="' + href + '">';
-	body += '<image width="134" src=' + thumb + '></image>';
-	body += '<p>' + name + '</p>';
-	body += '</a></td>';
+	item += '<td width="160" height="180" align="center"><a href="' + href + '">';
+	item += '<image width="134" src=' + thumb + '></image>';
+	item += '<p>' + name + '</p>';
+	item += '</a></td>';
 
 	if(++items_count % items_per_row == 0) {
-		body += '</tr>';
+		item += '</tr>';
 	}
-	return body;
+	return item;
 }
 
 function medex() {
@@ -79,8 +182,7 @@ function medex() {
 		if(href == undefined) continue;
 
 		if(href.indexOf('.thumb.') != -1) {
-			// Push thumbnail item
-			thumbs.push(href);
+			thumbs.push(href); // Push thumbnail item
 		} else {
 			var name = nodes[i].innerHTML;
 			if((name.charAt(0) != '.')) {
@@ -98,7 +200,7 @@ function medex() {
 					}
 				} else if(name.indexOf('.') != -1) {
 					var type = href.substring(href.lastIndexOf('.') + 1).toLowerCase();
-					var index = mediaType(type);
+					var index = mtype(type);
 					if(index == -1) {
 						groups[4].push([name, href, 'def']); // Push default item
 					} else {
@@ -128,12 +230,12 @@ function medex() {
 			var href = item[1];
 			var type = item[2];
 
-			var thumb = (j == 0 && name == '上一级') ? ('/appletv/image/up.png') : fetchThumb(thumbs, href, type);
-			if(j == 1 && sessionStorage) {
-				//href = 'javascript:mopen(\'' + href + '\')';
+			var thumb = (j == 0 && name == '上一级') ? ('/appletv/image/up.png') : mthumb(thumbs, href, type);
+			if(j == 1) {
+				href = 'javascript:imgex(' + i + ')';
 			}
 
-			body += addItem(name, href, thumb);
+			body += mitem(name, href, thumb);
 		}
 	}
 	body += '</table>';
@@ -149,9 +251,7 @@ function medex() {
 	}
 
 	// Save images
-	if(sessionStorage) {
-		sessionStorage['images'] = groups[1];
-	}
+	images = groups[1];
 	return body;
 }
 document.title = document.title.replace('Index of', '媒体浏览');

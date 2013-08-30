@@ -1,48 +1,65 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <script>
 
-var images = [];
+// Check value exists in array
+var types = ['jpg', 'png', 'gif', 'bmp', 'mov', 'mp4', 'm4v', 'mkv', 'mpg', 'avi', 'm3u', 'mp3', 'aac'];
 
-function mprev(href) {
-	for(var i = 0; i < images.length; i++) {
-		if(images[i] == href) {
-			if(i > 0) {
-				mopen(images[i - 1]);
-				return;
-			}
+function mediaType(type) {
+	for(var i in types) {
+		if(types[i] == type) {
+			return i;
 		}
 	}
-	alert('已经是第一张了');
+	return -1;
 }
 
-function mnext(href) {
-	for(var i = 0; i < images.length; i++) {
-		if(images[i] == href) {
-			if(i < images.length - 1) {
-				mopen(images[i + 1]);
-				return;
-			}
+// Fetch thumbnail
+var nothumb = false;
+
+function fetchThumb(thumbs, href, type) {
+	var pos = href.lastIndexOf('/');
+	var key = (pos != -1) ? href.substring(pos + 1) : href;
+	for(var i in thumbs) {
+		if(thumbs[i].indexOf(key) != -1) {
+			return thumbs[i];
 		}
 	}
-	alert('已经是最后一张了');
+
+	if(type != 'dir' && mediaType(type) != -1) nothumb = true;
+	return type ? ('/appletv/image/' + type + '.png') : href;
 }
 
-function mopen(href) {
-	var doc = document.open("text/html");
-	var html = '<html><body>';
-	html += '<a href="' + location.href + '">返回</a>';
-	html += '|<a href="javascript:mprev(\'' + href + '\')">上一张</a>';
-	html += '|<a href="javascript:mnext(\'' + href + '\')">下一张</a>';
-	html += '<br><br><img src="' + href + '"></img>';
-	html += '</body></html>';
-	doc.write(html);
-	doc.close();
+// Add items
+var items_count = 0;
+var items_per_row = document.documentElement.clientWidth / 160 | 0;
+if(items_per_row < 1) items_per_row = 1;
+
+function addItem(name, href, thumb) {
+	var body = '';
+	if(items_count % items_per_row == 0) {
+		body += '<tr>';
+	}
+
+	body += '<td width="160" height="180" align="center"><a href="' + href + '">';
+	body += '<image width="134" src=' + thumb + '></image>';
+	body += '<p>' + name + '</p>';
+	body += '</a></td>';
+
+	if(++items_count % items_per_row == 0) {
+		body += '</tr>';
+	}
+	return body;
 }
 
 function medex() {
-	var dirs = [];
-	var files = [];
 	var thumbs = [];
+	var groups = [
+		[],
+		[],
+		[],
+		[],
+		[]
+	];
 
 	var cnames = {
 		'Parent Directory': '上一级',
@@ -62,6 +79,7 @@ function medex() {
 		if(href == undefined) continue;
 
 		if(href.indexOf('.thumb.') != -1) {
+			// Push thumbnail item
 			thumbs.push(href);
 		} else {
 			var name = nodes[i].innerHTML;
@@ -76,91 +94,49 @@ function medex() {
 					if(pos != -1) path = path.substring(pos + 1);
 					if(path.length) {
 						var cname = cnames[name];
-						dirs.push([href, cname ? cname : name]);
+						groups[0].push([cname ? cname : name, href.substring(0, href.length - 1), 'dir']); // Push dir item
 					}
 				} else if(name.indexOf('.') != -1) {
-					files.push([href, name]);
+					var type = href.substring(href.lastIndexOf('.') + 1).toLowerCase();
+					var index = mediaType(type);
+					if(index == -1) {
+						groups[4].push([name, href, 'def']); // Push default item
+					} else {
+						// Trim extension for media item
+						var pos = name.lastIndexOf('.');
+						if(pos != -1) name = name.substring(0, pos);
+						if(index < 4) {
+							groups[1].push([name, href, type]); // Push image item
+						} else if(index < 10) {
+							groups[2].push([name, href, type]); // Push video item
+						} else {
+							groups[3].push([name, href, type]); // Push music item
+						}
+					}
 				}
 			}
 		}
 	}
 
-	// Check value exists in array
-	var types = ['jpg', 'png', 'gif', 'bmp', 'mov', 'mp4', 'm4v', 'mkv', 'mpg', 'avi', 'm3u', 'mp3', 'aac'];
+	// Geenrate HTML
+	var body = '<style>a:link {text-decoration:none;} a:hover {text-decoration:underline;}</style><table align="center">';
+	for(var j in groups) {
+		var items = groups[j];
+		for(var i in items) {
+			var item = items[i];
+			var name = item[0];
+			var href = item[1];
+			var type = item[2];
 
-	function isMediaType(type) {
-		for(var i in types) {
-			if(types[i] == type) {
-				return true;
+			var thumb = (j == 0 && name == '上一级') ? ('/appletv/image/up.png') : fetchThumb(thumbs, href, type);
+			if(j == 1 && sessionStorage) {
+				//href = 'javascript:mopen(\'' + href + '\')';
 			}
-		}
-		return false;
-	}
 
-	// Fetch thumbnail
-	var nothumb = false;
-
-	function fetchThumb(href, type) {
-		var pos = href.lastIndexOf('/');
-		var key = (pos != -1) ? href.substring(pos + 1) : href;
-		for(var i in thumbs) {
-			var thumb = thumbs[i];
-			var pos = thumb.lastIndexOf("/");
-			if(pos != -1) thumb = thumb.substring(pos + 1)
-			if(thumb.indexOf(key) != -1) {
-				return thumbs[i];
-			}
-		}
-		if(type != 'dir' && isMediaType(type)) nothumb = true;
-		return type ? ('/appletv/image/' + type + '.png') : href;
-	}
-
-	// Add items
-	var items = '';
-	var items_count = 0;
-	var items_per_row = document.documentElement.clientWidth / 160 | 0;
-	if(items_per_row < 1) items_per_row = 1;
-
-	function addItems(name, href, type) {
-		if(items_count % items_per_row == 0) {
-			items += '<tr>';
-		}
-		var thumb = (name == '上一级') ? ('/appletv/image/up.png') : fetchThumb(href, type);
-		if(type == 'jpg' || type == 'png' || type == 'bmp' || type == 'gif') {
-			images.push(decodeURIComponent(href));
-			href = 'javascript:mopen(\'' + href + '\')';
-		}
-		items += '<td width="160" height="180" align="center"><a id="' + type + items_count + '" href="' + href + '">';
-		items += '<image width="134" src=' + thumb + '></image>';
-		items += '<br>' + name;
-		items += '</a></td>';
-		items_count++;
-		if(items_count % items_per_row == 0) {
-			items += '</tr>';
+			body += addItem(name, href, thumb);
 		}
 	}
-
-	// Add dir items
-	for(var i in dirs) {
-		var href = dirs[i][0];
-		var name = dirs[i][1];
-		addItems(name, href.substring(0, href.length - 1), 'dir');
-	}
-
-	// Add file items
-	for(var i in files) {
-		var href = files[i][0];
-		var name = files[i][1];
-		var type = href.substring(href.lastIndexOf('.') + 1).toLowerCase();
-
-		if(isMediaType(type)) {
-			var pos = name.lastIndexOf('.');
-			if(pos != -1) name = name.substring(0, pos);
-		} else {
-			type = 'def';
-		}
-		addItems(name, href, type);
-	}
+	body += '</table>';
 
 	// Request for thumbnail on server
 	if(nothumb) {
@@ -169,11 +145,14 @@ function medex() {
 		if(pos != -1) path = path.substring(pos + 2);
 		pos = path.indexOf("/");
 		if(pos != -1) path = path.substring(pos + 1);
-		items += '<tr><td align="center" height="88" colspan="' + items_per_row + '"><a href="/appletv/thumb.cgi?' + path + '">生成缩略图</a></td></tr>';
+		body += '<p align="center"><a href="/appletv/thumb.cgi?' + path + '">生成缩略图</a></p>';
 	}
 
-	// Geenrate HTML
-	return '<table align="center">' + items + '</table>';
+	// Save images
+	if(sessionStorage) {
+		sessionStorage['images'] = groups[1];
+	}
+	return body;
 }
 document.title = document.title.replace('Index of', '媒体浏览');
 document.body.innerHTML = medex();

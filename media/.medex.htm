@@ -210,6 +210,8 @@ function medex() {
 						if(index < 4) {
 							groups[1].push([name, href, type]); // Push image item
 						} else if(index < 10) {
+							// MAGIC: Replace https to http to avoid iOS invalid SSL play back issue
+							href = href.replace('https', 'http');
 							groups[2].push([name, href, type]); // Push video item
 						} else {
 							groups[3].push([name, href, type]); // Push music item

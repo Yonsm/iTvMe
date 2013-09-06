@@ -16,6 +16,10 @@ Apple TV Media Explorer
 * address=/atv.qello.com/192.168.1.9
 * address=/trailers.apple.com/180.153.225.136
 
+此时应该创建一个进入到您的 HTTP 文档根目录下，执行 “cp appletv/us/js/application.js ./” 把application.js 移动到根目录中。
+
+注意：如果您的 HTTP 服务器地址不是 192.168.1.9，上面的地址请自行替换，此外还需要替换 application.js 和 index.xml 中的 192.168.1.9 为您的服务器地址。
+
 2).如果你不会弄DNS服务器，可以用我提供的，在AppleTV上设置DNS为117.41.182.103，这样的话http服务器地址必须是 192.168.1.9。
 
 4. 搭建HTTP服务，确保 http://192.168.1.9 能访问；HTTP 弄好后，需要开启文件列表功能（dir listing），这样我们才能以让ATV把上面的媒体文件列出来播放。
@@ -53,4 +57,4 @@ Apple TV Media Explorer
 
 持续更新中，详细步骤和说明请移步看2楼的详细帖子。：http://bbs.weiphone.com/read-htm-tid-5460032.html
 
-*** 注意，目前ATV的在线内容入口已经全部改成HTTPS，自己必须搭建HTTPS服务器，伪造证书，然后用 iPhone Configuration Utility 写入为看的证书到 ATV 上，才能正常劫持进入了。
+***注意，目前ATV的在线内容入口已经全部改成HTTPS，自己必须搭建HTTPS服务器，伪造证书，然后用 iPhone Configuration Utility 写入为看的证书到 ATV 上，才能正常劫持进入了。

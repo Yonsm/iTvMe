@@ -11,9 +11,10 @@ Apple TV Media Explorer
 
 * address=/trailers.apple.com/192.168.1.9
 
-由于目前 WSJ Live 和 MLB.TV 都没法劫持了，只能劫持预告片，而且 TT 的服务器写死了劫持预告片且不能从其它页面链接过去，所以没法和 TT 的在线内容共存了。
+如果想同时与TT服务器兼容（TT服务器强制写死了绑定预告片），则可以劫持Qello的图标：
 
-不过还好坚果壳的在线内容其实整理的还更好用，ATVME 的最后一个 TAB 里面的在线内容就是坚果壳提供的，使用完全无压力。
+* address=/atv.qello.com/192.168.1.9
+* address=/trailers.apple.com/180.153.225.136
 
 2).如果你不会弄DNS服务器，可以用我提供的，在AppleTV上设置DNS为117.41.182.103，这样的话http服务器地址必须是 192.168.1.9。
 
@@ -51,3 +52,5 @@ Apple TV Media Explorer
 2013.08.12 跟进 WSJ Live 失效，改成劫持预告片。
 
 持续更新中，详细步骤和说明请移步看2楼的详细帖子。：http://bbs.weiphone.com/read-htm-tid-5460032.html
+
+*** 注意，目前ATV的在线内容入口已经全部改成HTTPS，自己必须搭建HTTPS服务器，伪造证书，然后用 iPhone Configuration Utility 写入为看的证书到 ATV 上，才能正常劫持进入了。

@@ -6,9 +6,9 @@
 	<body>
 		<viewWithNavigationBar id="navigation" onNavigate="loadItem(event)">
 			<navigation>
-				<navigationItem id="movie">
-					<title>影片</title>
-					<url>http://192.168.1.9/media/Movies/</url>
+				<navigationItem id="download">
+					<title>下载</title>
+					<url>http://192.168.1.9/media/Downloads/</url>
 				</navigationItem>
 				<navigationItem id="photo">
 					<title>照片</title>
@@ -21,10 +21,6 @@
 				<navigationItem id="music">
 					<title>音乐</title>
 					<url>http://192.168.1.9/media/Music/</url>
-				</navigationItem>
-				<navigationItem id="download">
-					<title>下载</title>
-					<url>http://192.168.1.9/media/Downloads/</url>
 				</navigationItem>
 				<navigationItem id="intro">
 					<title>在线</title>

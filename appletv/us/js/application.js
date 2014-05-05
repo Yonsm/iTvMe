@@ -217,5 +217,5 @@ atv.config = {
 
 atv.onAppEntry = function()
 {
-    atv.loadURL('http://192.168.1.9/appletv/index.xml');
+    atv.loadURL('http://atv.qello.com/appletv/index.xml');
 }

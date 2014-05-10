@@ -17,7 +17,7 @@ MKV2MP4()
 	if [ -f "$DST" ]; then return; fi
 
 	Echo "MKV2MP4 $DST"
-	ffmpeg -i "$1" -acodec copy -vcodec copy -scodec copy  "$DST" < /dev/null
+	ffmpeg -i "$1" -map 0 -c copy  "$DST" < /dev/null
 }
 
 if [ -z $REQUEST_METHOD ]; then

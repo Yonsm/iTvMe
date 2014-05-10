@@ -7,31 +7,26 @@ Apple TV Media Explorer
 2. 在设置中把区域改成香港（或美国），这样主页上你可以看到好些图标。
 
 3. 劫持DNS，有两种方法，请任选其一：
-1).如果您的路由器支持DNSMasQ，可以在路由器上配置DNS劫持（192.168.1.2 换成你的 HTTP 服务器的 IP 地址，IP 地址仅举例，自行替换）：
-
-* address=/trailers.apple.com/192.168.1.2
-
-如果想同时与TT服务器兼容（TT服务器强制写死了绑定预告片），则可以劫持Qello的图标：
+1).如果您的路由器支持DNSMasQ，可以在路由器上配置DNS劫持（192.168.1.2 换成你的 HTTP 服务器的 IP 地址，IP 地址仅举例，自行替换，第二条为TT服务器），则可以劫持Qello的图标：
 
 * address=/atv.qello.com/192.168.1.2
 * address=/trailers.apple.com/180.153.225.136
 
 此时应该创建一个进入到您的 HTTP 文档根目录下，执行 “cp appletv/us/js/application.js ./” 把application.js 移动到根目录中。
 
-注意：如果您的 HTTP 服务器地址不是 192.168.1.2，上面的地址请自行替换，此外还需要替换 application.js 和 index.xml 中的 192.168.1.2 为您的服务器地址。
+~~2).如果你不会弄DNS服务器，可以用我提供的，在AppleTV上设置DNS为117.41.182.103，这样的话http服务器地址必须是 192.168.1.2。~~
 
-2).如果你不会弄DNS服务器，可以用我提供的，在AppleTV上设置DNS为117.41.182.103，这样的话http服务器地址必须是 192.168.1.2。
-
-4. 搭建HTTP服务，确保 http://192.168.1.2 能访问；HTTP 弄好后，需要开启文件列表功能（dir listing），这样我们才能以让ATV把上面的媒体文件列出来播放。
+4. 搭建HTTP/HTTPS服务，确保 http://192.168.1.2 和 https://atv.qello.com 能访问（https证书自己伪造创建）；HTTP 弄好后，需要开启文件列表功能（dir listing），这样我们才能以让ATV把上面的媒体文件列出来播放。
 1). Tomato 能用的lighttpd精简版可以从我这里自行提取：http://hdweb.googlecode.com/svn/ROUTER，已开启dir listing）
 2). My Book Live 开启dir listing，参考TT的帖子：http://bbs.weiphone.com/read-htm-tid-5484774.html，其实可以改进一下，编辑 wdnas文件，里面var/www的-Indexes前面的减号去掉，全局都支持dir listing了，不用创建.htaccess文件了。
 3). 其他NAS请自行想办法搭建http服务器。
+4). 重要：把自己伪造的 HTTPS 证书写入到 Apple TV 中具体方法请找相关教程或 QQ123018 询问。
 
 5. 把附件下载下来，解压放到http服务器根目录下（注意是http://192.168.1.2/api-video，目录不要多了，也不要少了）。源代码在 https://github.com/Yonsm/ATVME 上，需要尝鲜的可以去哪里随时看看有什么更新。
 
 6. 修改里面的index.xml文件，指向把url指向你的媒体文件的http url（能列出你的媒体文件的），目前index.xml是TAB页面，有5个版面：照片、视频、音乐、下载、设置。如果你也正好用我的文件路径（比如/media/Pictures）那就不用改了。注意每个URL最后的“/”是必须的，不要省略。
 
-7. 打开ATV，进入“预告片”，把你的文件都列出来了。
+7. 打开ATV，进入“预告片”和“Qello”，把你的文件都列出来了。
 
 0). 常规使用：视频、音乐直接点击播放，照片文件夹则以平铺方式呈现，支持幻灯片显示，非常完美。
 

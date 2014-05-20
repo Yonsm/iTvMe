@@ -1,2 +1,6 @@
 Options +Indexes
 ReadmeName /media/.medex.htm
+#RewriteEngine on
+#RewriteBase /
+#RewriteRule ^(.*\.mkv)$ /cgi-bin/mplay.py?/shares/Media/$1 [R,NC]
+#RewriteRule ^(.*\.mkv).(q.)$ /cgi-bin/mplay.py?/shares/Media/$1&$2 [R,NC]

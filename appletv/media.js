@@ -434,7 +434,10 @@ function makeMedia(url, text)
 			if(pos != -1) uri = uri.substring(0, pos);
 			pos = uri.indexOf('#');
 			if(pos != -1) uri = uri.substring(0, pos);
-			httpRequest(sbase + 'thumb.cgi?' + uri);
+			if(uri.indexOf('TEMP') == -1)
+			{
+				httpRequest(sbase + 'thumb.cgi?' + uri);
+			}
 		}
 	}
 	atv.sessionStorage['srtlist'] = srtlist;

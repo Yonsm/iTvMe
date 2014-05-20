@@ -6,9 +6,9 @@
 	<body>
 		<viewWithNavigationBar id="navigation" onNavigate="loadItem(event)">
 			<navigation>
-				<navigationItem id="favorite">
-					<title>收藏</title>
-					<url>http://atv.qello.com/media/Favorites/</url>
+				<navigationItem id="download">
+					<title>下载</title>
+					<url>http://atv.qello.com/media/Downloads/</url>
 				</navigationItem>
 				<navigationItem id="photo">
 					<title>照片</title>
@@ -21,10 +21,6 @@
 				<navigationItem id="music">
 					<title>音乐</title>
 					<url>http://atv.qello.com/media/Music/</url>
-				</navigationItem>
-				<navigationItem id="download">
-					<title>下载</title>
-					<url>http://atv.qello.com/media/Downloads/</url>
 				</navigationItem>
 			</navigation>
 		</viewWithNavigationBar>

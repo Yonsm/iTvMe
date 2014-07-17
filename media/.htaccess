@@ -1,5 +1,5 @@
 Options +Indexes
-ReadmeName /media/.medex.htm
+ReadmeName /appletv/medex.htm
 #RewriteEngine on
 #RewriteBase /
 #RewriteRule ^(.*\.mkv)$ /cgi-bin/mplay.py?/shares/Media/$1 [R,NC]

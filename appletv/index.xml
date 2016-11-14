@@ -16,7 +16,7 @@
 				</navigationItem>
 				<navigationItem id="video">
 					<title>视频</title>
-					<url>http://atv.qello.com/media/Videos/?C=N;O=D</url>
+					<url>http://atv.qello.com/media/Movies/?C=N;O=D</url>
 				</navigationItem>
 				<navigationItem id="music">
 					<title>音乐</title>
